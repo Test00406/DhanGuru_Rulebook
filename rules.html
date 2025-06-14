@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DhanGuru Office Rulebook</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Modern Vibrant -->
+    <!-- Application Structure Plan: The SPA is structured with a tab-based navigation to group the 11 rules into four logical, thematic categories: Daily Operations, Professionalism, Work & Growth, and Team & Culture. This structure was chosen over a simple linear list to prevent cognitive overload from a long scroll and to allow users to quickly access the specific information they need. The active state is managed by JS, which dynamically shows the relevant content and an associated conceptual chart. This design makes the rules feel more like an interactive guide than a static document, enhancing usability and engagement. -->
+    <!-- Visualization & Content Choices: Since the source report contains no quantitative data, visualizations are used conceptually to make policies more engaging. Goal: Inform/Organize. Method: Donut/Bar charts from Chart.js and structured HTML/CSS lists. Interaction: On-hover tooltips for charts and smooth content transitions for tabs. Justification: Visual metaphors (e.g., a donut chart for work hours) make abstract rules more tangible and easier to remember than plain text. This approach transforms a dry document into an interactive, user-friendly experience. Library: Chart.js for all charts. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .nav-button {
+            transition: all 0.3s ease;
+            color: #495057;
+        }
+        .nav-button.active {
+            background-image: linear-gradient(to right, #6D28D9, #4F46E5);
+            color: white;
+            box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        .nav-button:hover:not(.active) {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+        }
+        .content-section {
+            display: none;
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        .content-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .rule-card {
+            background-color: white;
+            border-left-width: 4px;
+            transition: all 0.3s ease;
+        }
+        .rule-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        .border-operations { border-color: #3B82F6; }
+        .text-operations { color: #3B82F6; }
+        .border-professionalism { border-color: #10B981; }
+        .text-professionalism { color: #10B981; }
+        .border-growth { border-color: #8B5CF6; }
+        .text-growth { color: #8B5CF6; }
+        .border-culture { border-color: #F59E0B; }
+        .text-culture { color: #F59E0B; }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        
+        <header class="text-center mb-10">
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900">
+                <span style="color: #51c81e;">Dhan</span><span style="color: #2652c9;">Guru</span>
+            </h1>
+            <p class="text-lg text-gray-600 mt-2">Office Rulebook</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center gap-3 sm:gap-4 mb-10">
+            <button data-target="operations" class="nav-button active font-medium py-2 px-5 rounded-full bg-white shadow-md">Daily Operations</button>
+            <button data-target="professionalism" class="nav-button font-medium py-2 px-5 rounded-full bg-white shadow-md">Professionalism</button>
+            <button data-target="growth" class="nav-button font-medium py-2 px-5 rounded-full bg-white shadow-md">Work & Growth</button>
+            <button data-target="culture" class="nav-button font-medium py-2 px-5 rounded-full bg-white shadow-md">Team & Culture</button>
+        </nav>
+
+        <main>
+            <!-- Section: Daily Operations -->
+            <section id="operations" class="content-section active">
+                <div class="bg-white/60 p-6 rounded-2xl shadow-inner-lg backdrop-blur-sm">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-5">
+                            <div class="rule-card p-6 rounded-lg shadow-md border-operations">
+                                <h3 class="font-bold text-lg text-operations mb-2">1. Work Hours</h3>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li><strong>Regular Timings:</strong> 9:00 AM - 5:00 PM (Mon-Fri).</li>
+                                    <li><strong>Break Time:</strong> 1:30 PM - 2:30 PM (Lunch).</li>
+                                    <li><strong>Flexible Hours:</strong> Permitted with approval.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-operations">
+                                <h3 class="font-bold text-lg text-operations mb-2">2. Attendance & Punctuality</h3>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Mark daily attendance in the team system.</li>
+                                    <li>Late arrivals (&gt;9:30 AM) noted after 3 instances/month.</li>
+                                </ul>
+                            </div>
+                             <div class="rule-card p-6 rounded-lg shadow-md border-operations">
+                                <h3 class="font-bold text-lg text-operations mb-2">3. Work Mode</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li><strong>Arrangement:</strong> On-Site Work Only.</li>
+                                    <li><strong>Daily Stand-up:</strong> 9:15 AM.</li>
+                                    <li><strong>EOD Updates:</strong> Submit by 5:15 PM.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="workHoursChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Professionalism -->
+            <section id="professionalism" class="content-section">
+                 <div class="bg-white/60 p-6 rounded-2xl shadow-inner-lg backdrop-blur-sm">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-5">
+                            <div class="rule-card p-6 rounded-lg shadow-md border-professionalism">
+                                <h3 class="font-bold text-lg text-professionalism mb-2">4. Professional Conduct</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Respect hierarchy and maintain professionalism.</li>
+                                    <li>Address seniors, mentors, and leads with courtesy.</li>
+                                    <li>Use proper channels for concerns.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-professionalism">
+                                <h3 class="font-bold text-lg text-professionalism mb-2">5. Communication</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Use Google Meet & WhatsApp for work updates.</li>
+                                    <li>Communication must be clear and respectful.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-professionalism">
+                                <h3 class="font-bold text-lg text-professionalism mb-2">Dress Code</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Maintain a smart, business casual dress code.</li>
+                                    <li>Be presentable and professional at all times.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-professionalism">
+                                <h3 class="font-bold text-lg text-professionalism mb-2">10. Confidentiality</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Do not share internal data externally.</li>
+                                    <li>An NDA is mandatory for all members.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="professionalismChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Work & Growth -->
+            <section id="growth" class="content-section">
+                <div class="bg-white/60 p-6 rounded-2xl shadow-inner-lg backdrop-blur-sm">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-5">
+                            <div class="rule-card p-6 rounded-lg shadow-md border-growth">
+                                <h3 class="font-bold text-lg text-growth mb-2">6. Task Responsibility</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Take full ownership of your assigned work.</li>
+                                    <li>Weekly review meetings: Fridays at 4:00 PM.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-growth">
+                                <h3 class="font-bold text-lg text-growth mb-2">7. Code & Documentation</h3>
+                                 <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Push all tech work to version control.</li>
+                                    <li>Maintain clean code and conduct peer reviews.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-growth">
+                                <h3 class="font-bold text-lg text-growth mb-2">11. Personal Development</h3>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Pursue one growth activity per quarter.</li>
+                                    <li>Share learnings in monthly team meetups.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="growthChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section: Team & Culture -->
+            <section id="culture" class="content-section">
+                <div class="bg-white/60 p-6 rounded-2xl shadow-inner-lg backdrop-blur-sm">
+                    <div class="grid md:grid-cols-2 gap-8 items-center">
+                        <div class="space-y-5">
+                            <div class="rule-card p-6 rounded-lg shadow-md border-culture">
+                                <h3 class="font-bold text-lg text-culture mb-2">8. Leaves & Time Off</h3>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Inform 1 day prior for planned leaves.</li>
+                                    <li>Max 2 leaves/month without special justification.</li>
+                                </ul>
+                            </div>
+                            <div class="rule-card p-6 rounded-lg shadow-md border-culture">
+                                <h3 class="font-bold text-lg text-culture mb-2">9. Work Culture</h3>
+                                <ul class="list-disc list-inside space-y-1 text-gray-700">
+                                    <li>Embrace positivity, team spirit, and mutual support.</li>
+                                    <li>Avoid gossip and negative behavior.</li>
+                                    <li>Celebrate wins together as a team.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="chart-container">
+                            <canvas id="cultureChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const chartInstances = {};
+
+        const chartConfigs = {
+            workHours: {
+                type: 'doughnut',
+                data: {
+                    labels: ['Core Work (7h)', 'Lunch Break (1h)'],
+                    datasets: [{
+                        data: [7, 1],
+                        backgroundColor: ['#3B82F6', '#BFDBFE'],
+                        borderColor: '#f8f9fa',
+                        borderWidth: 5,
+                        hoverOffset: 8,
+                        hoverBorderColor: 'white'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels:{color: '#495057'} }, title: { display: true, text: 'Workday Breakdown', color: '#343a40', font: { size: 16 } } },
+                    cutout: '70%'
+                }
+            },
+            professionalism: {
+                 type: 'polarArea',
+                data: {
+                    labels: ['Conduct', 'Communication', 'Dress Code', 'Confidentiality'],
+                    datasets: [{
+                        data: [10, 9, 8, 11],
+                        backgroundColor: [
+                            'rgba(16, 185, 129, 0.7)', 
+                            'rgba(52, 211, 153, 0.7)', 
+                            'rgba(110, 231, 183, 0.7)',
+                            'rgba(5, 150, 105, 0.7)'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels:{color: '#495057'} }, title: { display: true, text: 'Pillars of Professionalism', color: '#343a40', font: { size: 16 } } },
+                    scales: { r: { display: false } }
+                }
+            },
+            growth: {
+                type: 'radar',
+                data: {
+                    labels: ['Ownership', 'Code Quality', 'Reviews', 'Learning', 'Sharing'],
+                    datasets: [{
+                        label: 'Focus Areas',
+                        data: [9, 8, 7, 9, 8],
+                        fill: true,
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        borderColor: 'rgba(139, 92, 246, 1)',
+                        pointBackgroundColor: 'rgba(139, 92, 246, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(139, 92, 246, 1)'
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false }, title: { display: true, text: 'The Cycle of Growth', color: '#343a40', font: { size: 16 } } },
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e9ecef' }, grid: { color: '#e9ecef' },
+                            pointLabels: { font: { size: 12 }, color: '#495057' },
+                            ticks: { display:false, stepSize: 2 }
+                        }
+                    }
+                }
+            },
+            culture: {
+                 type: 'bar',
+                data: {
+                    labels: ['Monthly Permitted Leaves'],
+                    datasets: [{
+                        label: 'Allowed',
+                        data: [2],
+                        backgroundColor: '#F59E0B',
+                        borderRadius: 6,
+                        barThickness: 60,
+                    },
+                    {
+                        label: 'Work Days',
+                        data: [20],
+                        backgroundColor: '#FEF3C7',
+                        borderRadius: 6,
+                        barThickness: 60,
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+                    scales: { x: { stacked: true, display: false }, y: { stacked: true, display: false } },
+                    plugins: { legend: { position: 'bottom', labels:{color: '#495057'} }, title: { display: true, text: 'Leave Policy Snapshot', color: '#343a40', font: { size: 16 } } }
+                }
+            }
+        };
+
+        function renderChart(id, config) {
+            const ctx = document.getElementById(id)?.getContext('2d');
+            if (!ctx) return;
+            if (chartInstances[id]) {
+                chartInstances[id].destroy();
+            }
+            chartInstances[id] = new Chart(ctx, config);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const contentSections = document.querySelectorAll('.content-section');
+
+            function switchTab(targetId) {
+                navButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.target === targetId);
+                });
+                contentSections.forEach(section => {
+                    section.classList.toggle('active', section.id === targetId);
+                });
+
+                if (document.getElementById(targetId)?.classList.contains('active')) {
+                    let chartConfigKey;
+                    let chartId;
+
+                    switch (targetId) {
+                        case 'operations':
+                            chartConfigKey = 'workHours';
+                            chartId = 'workHoursChart';
+                            break;
+                        case 'professionalism':
+                            chartConfigKey = 'professionalism';
+                            chartId = 'professionalismChart';
+                            break;
+                        case 'growth':
+                            chartConfigKey = 'growth';
+                            chartId = 'growthChart';
+                            break;
+                        case 'culture':
+                            chartConfigKey = 'culture';
+                            chartId = 'cultureChart';
+                            break;
+                    }
+                    
+                    if (chartConfigKey && chartConfigs[chartConfigKey]) {
+                        setTimeout(() => renderChart(chartId, chartConfigs[chartConfigKey]), 50);
+                    }
+                }
+            }
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    switchTab(button.dataset.target);
+                });
+            });
+            
+            switchTab('operations');
+        });
+    </script>
+</body>
+</html>
